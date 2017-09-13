@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {View, Button, Text, FlatList, StyleSheet} from 'react-native';
+import {View, Button, Text, FlatList, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import api from '../config/api';
-import _ from 'lodash';
 
 export default class MainScreen extends React.Component {
   constructor(props) {
@@ -29,8 +28,23 @@ export default class MainScreen extends React.Component {
       })
   }
 
-  render() {
+  renderFlatListItem(item) {
     const { navigate } = this.props.navigation;
+    return(
+      <TouchableOpacity onPress={() => navigate('Photo', { user: item.name, image_url:item.image_url })} style={styles.container}>
+        <Image
+          source={{uri: item.image_url}} style={styles.photo}
+        />
+        <View style={{alignItems: 'flex-start', marginBottom: 10, marginLeft: 10}}>
+          <Text style={styles.photoName}>{item.name}</Text>
+          <Text style={styles.userName}>{item.user.fullname}</Text>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
+  render() {
+    
     return (
       // <View>
       //   <Text>Hello, Chat App!</Text>
@@ -40,55 +54,42 @@ export default class MainScreen extends React.Component {
       //   />
       // </View>
       // ====================
-      <View style={styles.container}>
-      {console.log("HERE " + this.state.photos)}
-        <FlatList
-          data={[
-            {key: 'Devin'},
-            {key: 'Jackson'},
-            {key: 'James'},
-            {key: 'Joel'},
-            {key: 'John'},
-            {key: 'Jillian'},
-            {key: 'Jimmy'},
-            {key: 'Julie'},
-          ]}
-          renderItem={({item}) => <Button onPress={() => navigate('Photo', { user: item.key })} style={styles.item} title={item.key}/>}
+      <View>
+        <FlatList  style={{backgroundColor: '#e6e6e6'}}
+          data={this.state.photos}
+          keyExtractor={(item) => item.id}
+          renderItem={({item}) => this.renderFlatListItem(item)}
         />
       </View>
     );
   }
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//    flex: 1,
-//    paddingTop: 22
-//   },
-//   item: {
-//     padding: 10,
-//     fontSize: 18,
-//     height: 44,
-//   },
-// })
-
 const styles = StyleSheet.create({
   container: {
-   flex: 1,
-   paddingTop: 22
+    flex: 1,
+    marginBottom: 5,
+    backgroundColor: '#fff',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 5,
   },
-  sectionHeader: {
-    paddingTop: 2,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 2,
-    fontSize: 14,
+  photo: {
+    // marginBottom: 10, 
+    // marginLeft: 10,
+    height: 100,
+    width: 100
+  },
+  photoName: {
     fontWeight: 'bold',
-    backgroundColor: 'rgba(247,247,247,1.0)',
+    fontSize: 15,
   },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-  },
+  userName: {
+    color: 'rgba(0,0,0,.4)',
+  }
 })
+
+// renderItem={({item}) => <Button onPress={() => navigate('Photo', { user: item.name })} style={styles.item} title={item.name}/>}

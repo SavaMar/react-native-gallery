@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 
 export default class PhotoScreen extends React.Component {
     // Nav options can be defined as a function of the screen's props:
@@ -11,8 +11,11 @@ export default class PhotoScreen extends React.Component {
     const { params } = this.props.navigation.state;
     return (
       <View>
-        <Text>Chat with {params.user}</Text>
+        <Image
+          source={{uri: params.image_url}} style={{height:300, width: 300}}
+        />
       </View>
     );
   }
 }
+        // <Text style={{height:100, width: 100}} >Chat with {params.user}</Text>
