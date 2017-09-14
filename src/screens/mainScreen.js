@@ -31,8 +31,8 @@ export default class MainScreen extends React.Component {
       <View
         style={{
           height: 1,
-          width: "58%",
-          marginLeft: "35%",
+          width: "74%",
+          marginLeft: "23%",
           backgroundColor: "#CED0CE",
         }}
       />
@@ -153,8 +153,8 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   photo: {
-    height: 100,
-    width: 100
+    height: 60,
+    width: 60
   },
   photoName: {
     fontWeight: 'bold',
